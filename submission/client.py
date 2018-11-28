@@ -10,7 +10,7 @@ def Main():
     while True:
         s. send( mesage.encode('ascii') )
         data = s.recv(1024)
-        print('Received from the server :', str(data.decode('ascii')) )
+        print('Server Receipt :', str(data.decode('ascii')) )
         
         user_input = input('\nContinue? y/n :')
         if user_input == 'y':

@@ -9,7 +9,7 @@ def threaded(c):
     while True:
         data = recv(1024)
         if not data:
-            print('Bye')
+            print('Goodbye')
             print_lock.release()
             #lock release before exiting
             break
