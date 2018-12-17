@@ -61,15 +61,35 @@ class ClientThread(Thread):
            sys.exit(1)
 
        fs = FramedStreamSock(s, debug=debug)
+       
+       fname = input("What file are we sending?")
+       #Check if it's a valid file
+       if os.path.isfile(fname):
+           #get file size
+           fsize = os.path.getsize(fname)
+    
+           sock.send((str(size)+":"fname).encode())
+           msg = sock.recv(100).decode()
+           if msg == "READY TO RECEIVE":
+               print(msg)
+               with open(fname, 'rb') as fn:
+                   btoSend = fn.read(100)
+                   sock.send(btoSend)
 
-
+                   #send till we run out
+                   while bstoSend:
+                       btoSend = fn.read(100)
+                       sock.send(btoSend)
+                print("Okay, all done")
+                print(sock.recv(100).decode())
+"""
        print("sending hello world")
        fs.sendmsg(b"hello world")
        print("received:", fs.receivemsg())
 
        fs.sendmsg(b"hello world")
        print("received:", fs.receivemsg())
-
+"""
 for i in range(100):
     ClientThread(serverHost, serverPort, debug)
 
